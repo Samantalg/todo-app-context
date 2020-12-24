@@ -21,6 +21,9 @@ const AddTodo = () => {
                 value={value}
                 onChange={handleChange}
             />
+            <button type="submit">
+          Añadir tarea
+        </button>
         </form>
     )
 }

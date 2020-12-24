@@ -1,4 +1,4 @@
-import { ADD_TODO, TOGGLE_TODO } from './actions'
+import { ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER } from './actions'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -7,15 +7,29 @@ const reducer = (state, action) => {
     case TOGGLE_TODO:
       return state.map((todo, index) => {
         if (index === action.id) {
-          console.log(todo);
           return Object.assign({}, todo, {
             completed: !todo.completed
           })
         }
         return todo
       })
+    case SET_VISIBILITY_FILTER:
+      return getVisibleTodos(state, action.filter)
     default:
-      return state
+      break
+  }
+}
+
+const getVisibleTodos = (todos, filter) => {
+  switch (filter) {
+    case 'SHOW_ALL':
+      return todos
+    case 'SHOW_COMPLETED':
+      return todos.filter(t => t.completed)
+    case 'SHOW_ACTIVE':
+      return todos.filter(t => !t.completed)
+    default:
+      return todos
   }
 }
 
